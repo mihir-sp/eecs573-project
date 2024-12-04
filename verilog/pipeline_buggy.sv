@@ -295,6 +295,8 @@ module pipeline_buggy (
     stage_ex_buggy stage_ex_0 (
         // Input
         .id_ex_reg (id_ex_reg),
+        .reset(reset),
+        .clock(clock),
 
         // Output
         .ex_packet (ex_packet)
@@ -305,6 +307,16 @@ module pipeline_buggy (
     //           EX/MEM Pipeline Register           //
     //                                              //
     //////////////////////////////////////////////////
+    logic [4:0] delayCounter;
+
+    always_ff @(posedge clock) begin
+        if(reset) begin
+            delayCounter <= 0;
+        end
+        else begin
+            delayCounter <= delayCounter + 1;
+        end
+    end
 
     assign ex_mem_enable = 1'b1; // always enabled
     // synopsys sync_set_reset "reset"
@@ -314,7 +326,9 @@ module pipeline_buggy (
             ex_mem_reg      <= 0;    // the defaults can all be zero!
         end else if (ex_mem_enable) begin
             ex_mem_inst_dbg <= id_ex_inst_dbg; // debug output, just forwarded from ID
-            ex_mem_reg      <= ex_packet;
+
+            ex_mem_reg  <=  ex_packet;
+
         end
     end
 

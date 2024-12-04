@@ -89,8 +89,8 @@ module QEDV2 #(
             if (packet2.valid && count2 < FIFO_DEPTH) begin         
                 if(cycle_count2 == N-1) begin       
                     fifo_mem2[tail2] <= packet2;
-                    $fdisplay(log_file, "Time %0t: Enqueued packet1 to FIFO1 at index %0d", $time, tail2);
-                    $fdisplay(log_file, "  packet1: result=%h, NPC=%h, valid=%b", 
+                    $fdisplay(log_file, "Time %0t: Enqueued packet1 to FIFO2 at index %0d", $time, tail2);
+                    $fdisplay(log_file, "  packet2: result=%h, NPC=%h, valid=%b", 
                                 packet2.result, packet2.NPC, packet2.valid);
                     tail2 <= (tail2 + 1);
                     count2 <= count2 + 1;
@@ -102,9 +102,9 @@ module QEDV2 #(
                     cycle_count2 <= cycle_count2 + 1;
                 end
             end else if (!packet2.valid) begin
-                $fdisplay(log_file, "Time %0t: packet1 is invalid. Not enqueued to FIFO1.", $time);
+                $fdisplay(log_file, "Time %0t: packet2 is invalid. Not enqueued to FIFO2.", $time);
             end else begin
-                $fdisplay(log_file, "Time %0t: FIFO1 is full. packet1 not enqueued.", $time);
+                $fdisplay(log_file, "Time %0t: FIFO2 is full. packet1 not enqueued.", $time);
             end
 
             if (count1 > 0 && count2 > 0) begin

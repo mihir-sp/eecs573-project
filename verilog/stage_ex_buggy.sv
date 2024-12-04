@@ -18,6 +18,7 @@
 module alu_buggy (
     input [`XLEN-1:0] opa,
     input [`XLEN-1:0] opb,
+    input logic reset, clock,
     ALU_FUNC          func,
 
     output logic [`XLEN-1:0] result
@@ -37,23 +38,34 @@ module alu_buggy (
     assign unsigned_mul = opa * opb;
     assign mixed_mul    = signed_opa * opb;
 
+    logic [4:0] eCounter;
+
+    always_ff @(posedge clock) begin
+        if(reset) begin
+            eCounter <= 0;
+        end
+        else begin
+            eCounter <= eCounter + 1;
+        end
+    end
+
+
     always_comb begin
         case (func)
-            ALU_ADD:    result = opa + opb +1;
-            ALU_SUB:    result = opa - opb;
-            ALU_AND:    result = opa & opb;
-            ALU_SLT:    result = signed_opa < signed_opb;
-            ALU_SLTU:   result = opa < opb;
-            ALU_OR:     result = opa | opb;
-            ALU_XOR:    result = opa ^ opb;
-            ALU_SRL:    result = opa >> opb[4:0];
-            ALU_SLL:    result = opa << opb[4:0];
-            ALU_SRA:    result = signed_opa >>> opb[4:0]; // arithmetic from logical shift
-            ALU_MUL:    result = signed_mul[`XLEN-1:0];
-            ALU_MULH:   result = signed_mul[2*`XLEN-1:`XLEN];
-            ALU_MULHSU: result = mixed_mul[2*`XLEN-1:`XLEN];
-            ALU_MULHU:  result = unsigned_mul[2*`XLEN-1:`XLEN];
-
+            ALU_ADD:    result = (eCounter != 5'b00111) ? opa + opb :  32'hFACEFEED;
+            ALU_SUB:    result = (eCounter != 5'b00111) ? opa - opb :  32'hFACEFEED;
+            ALU_AND:    result = (eCounter != 5'b00111) ? opa & opb :  32'hFACEFEED;
+            ALU_SLT:    result = (eCounter != 5'b00111) ? signed_opa < signed_opb :  32'hFACEFEED;
+            ALU_SLTU:   result = (eCounter != 5'b00111) ? opa < opb :  32'hFACEFEED;
+            ALU_OR:     result = (eCounter != 5'b00111) ? opa | opb :  32'hFACEFEED;
+            ALU_XOR:    result = (eCounter != 5'b00111) ? opa ^ opb :  32'hFACEFEED;
+            ALU_SRL:    result = (eCounter != 5'b00111) ? opa >> opb[4:0] :  32'hFACEFEED;
+            ALU_SLL:    result = (eCounter != 5'b00111) ? opa << opb[4:0] :  32'hFACEFEED;
+            ALU_SRA:    result = (eCounter != 5'b00111) ? signed_opa >>> opb[4:0] :  32'hFACEFEED; // arithmetic from logical shift
+            ALU_MUL:    result = (eCounter != 5'b00111) ? signed_mul[`XLEN-1:0] :  32'hFACEFEED;
+            ALU_MULH:   result = (eCounter != 5'b00111) ? signed_mul[2*`XLEN-1:`XLEN] :  32'hFACEFEED;
+            ALU_MULHSU: result = (eCounter != 5'b00111) ? mixed_mul[2*`XLEN-1:`XLEN] :  32'hFACEFEED;
+            ALU_MULHU:  result = (eCounter != 5'b00111) ? unsigned_mul[2*`XLEN-1:`XLEN] :  32'hFACEFEED;
             default:    result = `XLEN'hfacebeec;  // here to prevent latches
         endcase
     end
@@ -91,6 +103,7 @@ endmodule // conditional_branch
 
 module stage_ex_buggy (
     input ID_EX_PACKET id_ex_reg,
+    input logic reset, clock,
 
     output EX_MEM_PACKET ex_packet
 );
@@ -147,6 +160,8 @@ module stage_ex_buggy (
         .opa(opa_mux_out),
         .opb(opb_mux_out),
         .func(id_ex_reg.alu_func),
+        .reset(reset),
+        .clock(clock),
 
         // Output
         .result(ex_packet.alu_result)
