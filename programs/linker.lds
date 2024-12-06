@@ -12,7 +12,7 @@ ENTRY(crt)
 
 /* Setting memory regions */
 MEMORY {
-    MEM (rwx) : ORIGIN = 0x00000000, LENGTH = 0x10000
+    MEM (rwx) : ORIGIN = 0x00000000, LENGTH = 0x70000
 }
 
 

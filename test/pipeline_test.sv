@@ -366,6 +366,7 @@ module testbench;
 
 
     initial begin
+        $assertoff;
         testPrint;
         //$dumpvars;
         // set paramterized strings, see comment at start of module

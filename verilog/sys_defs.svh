@@ -45,7 +45,7 @@
 
 `define NUM_MEM_TAGS 15
 
-`define MEM_SIZE_IN_BYTES (64*1024)
+`define MEM_SIZE_IN_BYTES (64*1024*8)
 `define MEM_64BIT_LINES   (`MEM_SIZE_IN_BYTES/8)
 
 typedef union packed {

@@ -97,10 +97,10 @@ TCL_SCRIPT = synth/470synth.tcl
 
 # you might need to update these build flags for project 4, but make sure you know what they do:
 # https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Options.html
-CFLAGS     = -mno-relax -march=rv32im -mabi=ilp32 -nostartfiles -std=gnu11 -mstrict-align -mno-div
+CFLAGS     = -mno-relax -march=rv32i -mabi=ilp32 -nostartfiles -std=gnu11 -mstrict-align -mno-div 
 # adjust the optimization if you want programs to run faster; this may obfuscate/change their instructions
 OFLAGS     = -O0
-ASFLAGS    = -mno-relax -march=rv32im -mabi=ilp32 -nostartfiles -Wno-main -mstrict-align
+ASFLAGS    = -mno-relax -march=rv32i -mabi=ilp32 -nostartfiles -Wno-main -mstrict-align
 OBJFLAGS   = -SD -M no-aliases
 OBJCFLAGS  = --set-section-flags .bss=contents,alloc,readonly
 OBJDFLAGS  = -SD -M numeric,no-aliases
@@ -234,7 +234,7 @@ ASLINKERS  = programs/aslinker.lds
 
 # turn any elf file into a hex memory file ready for the testbench
 %.mem: %.elf
-	$(ELF2HEX) 8 8192 $< > $@
+	$(ELF2HEX) 8 65536 $< > $@
 	@$(call PRINT_COLOR, 6, created memory file $@)
 	@$(call PRINT_COLOR, 3, NOTE: to see RISC-V assembly run: '"make $*.dump"')
 	@$(call PRINT_COLOR, 3, for \*.c sources also try: '"make $*.debug.dump"')

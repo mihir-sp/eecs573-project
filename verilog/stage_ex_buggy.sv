@@ -39,7 +39,7 @@ module alu_buggy (
 
     always_comb begin
         case (func)
-            ALU_ADD:    result = opa + opb +1;
+            ALU_ADD:    result = opa + opb ;
             ALU_SUB:    result = opa - opb;
             ALU_AND:    result = opa & opb;
             ALU_SLT:    result = signed_opa < signed_opb;
