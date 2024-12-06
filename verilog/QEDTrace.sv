@@ -10,13 +10,17 @@ module QEDTrace
     output MEM_WB_PACKET  [FIFO_SIZE-1:0]    trace1 , // FIFO1 contents
     output MEM_WB_PACKET  [FIFO_SIZE-1:0]    trace2,   // FIFO2 contents
     output [$clog2(FIFO_SIZE)-1:0] head1_out, head2_out,
-    output logic has_fault_occured
+    output logic has_fault_occured,
+    output int faultCounterDebug
 
 );
 
     // FIFO1 signals
     logic [$clog2(FIFO_SIZE)-1:0] head1;
     MEM_WB_PACKET   [FIFO_SIZE-1:0]             fifo1 ; // Storage array for FIFO1
+
+    int faultCounter;
+    assign faultCounterDebug = faultCounter;
     
 
     // FIFO2 signals
@@ -34,8 +38,16 @@ module QEDTrace
             fifo1 <= 0;
             fifo2 <= 0;
             has_fault_occured <= 0;
+            faultCounter <= 0;
         end
         else begin
+
+            if (has_fault_occured) begin
+                faultCounter <= faultCounter;
+            end
+            else begin
+                faultCounter <= faultCounter + 1;
+            end
             
             // FIFO1 Operation
             if(fault) begin

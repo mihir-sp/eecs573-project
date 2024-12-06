@@ -18,6 +18,7 @@
 module alu_buggy (
     input [`XLEN-1:0] opa,
     input [`XLEN-1:0] opb,
+    input logic reset, clock,
     ALU_FUNC          func,
 
     output logic [`XLEN-1:0] result
@@ -36,6 +37,18 @@ module alu_buggy (
     assign signed_mul   = signed_opa * signed_opb;
     assign unsigned_mul = opa * opb;
     assign mixed_mul    = signed_opa * opb;
+
+    logic [4:0] eCounter;
+
+    always_ff @(posedge clock) begin
+        if(reset) begin
+            eCounter <= 0;
+        end
+        else begin
+            eCounter <= eCounter + 1;
+        end
+    end
+
 
     always_comb begin
         case (func)
@@ -91,6 +104,7 @@ endmodule // conditional_branch
 
 module stage_ex_buggy (
     input ID_EX_PACKET id_ex_reg,
+    input logic reset, clock,
 
     output EX_MEM_PACKET ex_packet
 );
@@ -147,6 +161,8 @@ module stage_ex_buggy (
         .opa(opa_mux_out),
         .opb(opb_mux_out),
         .func(id_ex_reg.alu_func),
+        .reset(reset),
+        .clock(clock),
 
         // Output
         .result(ex_packet.alu_result)

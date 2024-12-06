@@ -248,7 +248,7 @@ module testbench;
         .mem2proc_tag      (pif1.mem2proc_tag)
     );
 
-    QEDV2 #(.N(1)) qed (
+    QEDV2 #(.N(10)) qed (
         .clk(clock),
         .reset(reset),
         .packet1(pif0.mem_wb_packet_out),
@@ -258,6 +258,7 @@ module testbench;
 
 
     logic [$clog2(QED_TRACE_FIFO_SIZE)-1:0] head1, head2;
+    int faultCounterDebug;
     QEDTrace
     #(.FIFO_SIZE(QED_TRACE_FIFO_SIZE))
     qedtrace (
@@ -270,7 +271,8 @@ module testbench;
         .trace2(trace2),
         .head1_out(head1),
         .head2_out(head2),
-        .has_fault_occured(has_fault_occured)
+        .has_fault_occured(has_fault_occured),
+        .faultCounterDebug(faultCounterDebug)
         
 
     );
@@ -444,7 +446,7 @@ module testbench;
         logic [$clog2(QED_TRACE_FIFO_SIZE)-1:0] modHead1, modHead2;
 
         function print_trace;
-            if(has_fault_occured) $display("Fault Detected!");
+            if(has_fault_occured) $display("Fault Detected!, Fault Cycle Counter = %d", faultCounterDebug);
             else $display("Fault not detected!");
 
                 //             int head1cast; 
@@ -536,6 +538,7 @@ module testbench;
                             pif0.pipeline_error_status);
                 endcase
                 $display("@@@\n@@");
+                $display("Core0 ended execution debug_count: %0d", pif0.debug_counter);
                 show_clk_count0;
                 print_close(); // close the pipe_print output file
                 $fclose(wb_fileno0);
@@ -547,7 +550,7 @@ module testbench;
         end // if(reset)
     end
 
-
+    logic buggyEnded = 0;
     always @(negedge clock) begin
         if(reset) begin
             $display("@@\n@@  %t : System STILL at reset, can't show anything\n@@",
@@ -583,7 +586,7 @@ module testbench;
             end
 
             // deal with any halting conditions
-            if(pif1.pipeline_error_status != NO_ERROR || pif1.debug_counter >160000)begin
+            if((pif1.pipeline_error_status != NO_ERROR || pif1.debug_counter >160000) && buggyEnded == 0)begin
                 $display("@@@ Unified Memory contents hex on left, decimal on right: ");
                 show_mem_with_decimal1(0,`MEM_64BIT_LINES - 1);
                 // 8Bytes per line, 16kB total
@@ -602,14 +605,16 @@ module testbench;
                             pif1.pipeline_error_status);
                 endcase
                 $display("@@@\n@@");
+                $display("Core1 ended execution debug_count: %0d", pif1.debug_counter);
                 show_clk_count1;
                 print_close(); // close the pipe_print output file
                 $fclose(wb_fileno1);
-                #100 
-                print_trace;
-                $finish;
+                buggyEnded = 1;
+               
+                #100;
+                // print_trace;
             end
-            pif0.debug_counter <= pif1.debug_counter + 1;
+            pif1.debug_counter <= pif1.debug_counter + 1;
         end // if(reset)
     end
 
