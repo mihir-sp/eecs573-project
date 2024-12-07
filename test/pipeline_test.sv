@@ -131,6 +131,7 @@ module testbench;
 
     pipeline_interface pif0();
     pipeline_interface pif1();
+    event done;
 
 
     // Instantiate the Pipeline
@@ -540,6 +541,7 @@ module testbench;
                 $display("@@@\n@@");
                 $display("Core0 ended execution debug_count: %0d", pif0.debug_counter);
                 show_clk_count0;
+                ->done;
                 print_close(); // close the pipe_print output file
                 $fclose(wb_fileno0);
                 #100 
@@ -607,6 +609,7 @@ module testbench;
                 $display("@@@\n@@");
                 $display("Core1 ended execution debug_count: %0d", pif1.debug_counter);
                 show_clk_count1;
+                @(done);
                 print_close(); // close the pipe_print output file
                 $fclose(wb_fileno1);
                 buggyEnded = 1;
