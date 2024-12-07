@@ -136,7 +136,7 @@ endif
 HEADERS = verilog/sys_defs.svh \
           verilog/ISA.svh
 
-TESTBENCH = test/pipeline_test.sv \
+TESTBENCH = test/pipeline_top_test.sv \
             test/pipeline_print.c \
             test/mem.sv
 
@@ -151,9 +151,10 @@ SOURCES = verilog/pipeline.sv \
 		  verilog/QEDV2.sv \
 		  verilog/pipeline_buggy.sv \
 		  verilog/stage_ex_buggy.sv \
-		  verilog/QEDtrace.sv 
+		  verilog/QEDtrace.sv \
+		  verilog/pipeline_top.sv \
 
-SYNTH_FILES = synth/pipeline.vg
+SYNTH_FILES = synth/pipeline_top.vg
 
 # the normal simulation executable will run your testbench on the original modules
 simv: $(TESTBENCH) $(SOURCES) $(HEADERS)

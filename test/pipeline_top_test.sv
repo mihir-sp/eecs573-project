@@ -22,50 +22,50 @@ import "DPI-C" function void print_membus(int proc2mem_command, int mem2proc_res
 import "DPI-C" function void print_close();
 import "DPI-C" function void testPrint();
 
-interface pipeline_interface;
-    logic        clock;
-    logic        reset;
+// interface pipeline_interface;
+//     logic        clock;
+//     logic        reset;
 
-    logic [31:0] clock_count;
-    logic [31:0] instr_count;
-    logic [63:0] debug_counter; // counter used for when pipeline infinite loops, forces termination
+//     logic [31:0] clock_count;
+//     logic [31:0] instr_count;
+//     logic [63:0] debug_counter; // counter used for when pipeline infinite loops, forces termination
 
-    logic [1:0]       proc2mem_command;
-    logic [`XLEN-1:0] proc2mem_addr;
-    logic [63:0]      proc2mem_data;
-    logic [3:0]       mem2proc_response;
-    logic [63:0]      mem2proc_data;
-    logic [3:0]       mem2proc_tag;
-`ifndef CACHE_MODE
-    MEM_SIZE          proc2mem_size;
-`endif
+//     logic [1:0]       proc2mem_command;
+//     logic [`XLEN-1:0] proc2mem_addr;
+//     logic [63:0]      proc2mem_data;
+//     logic [3:0]       mem2proc_response;
+//     logic [63:0]      mem2proc_data;
+//     logic [3:0]       mem2proc_tag;
+// `ifndef CACHE_MODE
+//     MEM_SIZE          proc2mem_size;
+// `endif
 
-    logic [3:0]       pipeline_completed_insts;
-    EXCEPTION_CODE    pipeline_error_status;
-    logic [4:0]       pipeline_commit_wr_idx;
-    logic [`XLEN-1:0] pipeline_commit_wr_data;
-    logic             pipeline_commit_wr_en;
-    logic [`XLEN-1:0] pipeline_commit_NPC;
+//     logic [3:0]       pipeline_completed_insts;
+//     EXCEPTION_CODE    pipeline_error_status;
+//     logic [4:0]       pipeline_commit_wr_idx;
+//     logic [`XLEN-1:0] pipeline_commit_wr_data;
+//     logic             pipeline_commit_wr_en;
+//     logic [`XLEN-1:0] pipeline_commit_NPC;
 
-    logic [`XLEN-1:0] if_NPC_dbg;
-    logic [31:0]      if_inst_dbg;
-    logic             if_valid_dbg;
-    logic [`XLEN-1:0] if_id_NPC_dbg;
-    logic [31:0]      if_id_inst_dbg;
-    logic             if_id_valid_dbg;
-    logic [`XLEN-1:0] id_ex_NPC_dbg;
-    logic [31:0]      id_ex_inst_dbg;
-    logic             id_ex_valid_dbg;
-    logic [`XLEN-1:0] ex_mem_NPC_dbg;
-    logic [31:0]      ex_mem_inst_dbg;
-    logic             ex_mem_valid_dbg;
-    logic [`XLEN-1:0] mem_wb_NPC_dbg;
-    logic [31:0]      mem_wb_inst_dbg;
-    logic             mem_wb_valid_dbg;
-    EX_MEM_PACKET     ex_mem_packet_out;
-    MEM_WB_PACKET     mem_wb_packet_out;
+//     logic [`XLEN-1:0] if_NPC_dbg;
+//     logic [31:0]      if_inst_dbg;
+//     logic             if_valid_dbg;
+//     logic [`XLEN-1:0] if_id_NPC_dbg;
+//     logic [31:0]      if_id_inst_dbg;
+//     logic             if_id_valid_dbg;
+//     logic [`XLEN-1:0] id_ex_NPC_dbg;
+//     logic [31:0]      id_ex_inst_dbg;
+//     logic             id_ex_valid_dbg;
+//     logic [`XLEN-1:0] ex_mem_NPC_dbg;
+//     logic [31:0]      ex_mem_inst_dbg;
+//     logic             ex_mem_valid_dbg;
+//     logic [`XLEN-1:0] mem_wb_NPC_dbg;
+//     logic [31:0]      mem_wb_inst_dbg;
+//     logic             mem_wb_valid_dbg;
+//     EX_MEM_PACKET     ex_mem_packet_out;
+//     MEM_WB_PACKET     mem_wb_packet_out;
     
-endinterface //pipeline_interface
+// endinterface //pipeline_interface
 
 
 module testbench;
@@ -128,93 +128,188 @@ module testbench;
     MEM_WB_PACKET    [QED_TRACE_FIFO_SIZE-1:0]  trace1; // FIFO1 contents
     MEM_WB_PACKET     [QED_TRACE_FIFO_SIZE-1:0] trace2;
     logic has_fault_occured;
+    logic [$clog2(QED_TRACE_FIFO_SIZE)-1:0] head1, head2;
+    int faultCounterDebug;
 
     pipeline_interface pif0();
     pipeline_interface pif1();
     event done;
 
-    pipeline_top top0();
+    pipeline_top #(
+        .QED_TRACE_FIFO_SIZE(QED_TRACE_FIFO_SIZE)
+    )
+    
+    top0(
+         // Inputs
+        .clock0             (pif0.clock),
+        .reset0            (pif0.reset),
+        .mem2proc_response0 (pif0.mem2proc_response),
+        .mem2proc_data0     (pif0.mem2proc_data),
+        .mem2proc_tag0      (pif0.mem2proc_tag),
+
+        // Outputs
+        .proc2mem_command0 (pif0.proc2mem_command),
+        .proc2mem_addr0    (pif0.proc2mem_addr),
+        .proc2mem_data0    (pif0.proc2mem_data),
+        .proc2mem_size0    (pif0.proc2mem_size),
+
+        .pipeline_completed_insts0 (pif0.pipeline_completed_insts),
+        .pipeline_error_status0    (pif0.pipeline_error_status),
+        .pipeline_commit_wr_data0  (pif0.pipeline_commit_wr_data),
+        .pipeline_commit_wr_idx0   (pif0.pipeline_commit_wr_idx),
+        .pipeline_commit_wr_en0    (pif0.pipeline_commit_wr_en),
+        .pipeline_commit_NPC0      (pif0.pipeline_commit_NPC),
+
+        .if_NPC_dbg0       (pif0.if_NPC_dbg),
+        .if_inst_dbg0      (pif0.if_inst_dbg),
+        .if_valid_dbg0     (pif0.if_valid_dbg),
+        .if_id_NPC_dbg0    (pif0.if_id_NPC_dbg),
+        .if_id_inst_dbg0   (pif0.if_id_inst_dbg),
+        .if_id_valid_dbg0  (pif0.if_id_valid_dbg),
+        .id_ex_NPC_dbg0    (pif0.id_ex_NPC_dbg),
+        .id_ex_inst_dbg0   (pif0.id_ex_inst_dbg),
+        .id_ex_valid_dbg0  (pif0.id_ex_valid_dbg),
+        .ex_mem_NPC_dbg0   (pif0.ex_mem_NPC_dbg),
+        .ex_mem_inst_dbg0  (pif0.ex_mem_inst_dbg),
+        .ex_mem_valid_dbg0 (pif0.ex_mem_valid_dbg),
+        .mem_wb_NPC_dbg0   (pif0.mem_wb_NPC_dbg),
+        .mem_wb_inst_dbg0  (pif0.mem_wb_inst_dbg),
+        .mem_wb_valid_dbg0 (pif0.mem_wb_valid_dbg),
+        .ex_mem_packet_out0(pif0.ex_mem_packet_out),
+        .mem_wb_packet_out0(pif0.mem_wb_packet_out),
+
+
+        .clock1             (pif1.clock),
+        .reset1             (pif1.reset),
+        .mem2proc_response1 (pif1.mem2proc_response),
+        .mem2proc_data1     (pif1.mem2proc_data),
+        .mem2proc_tag1      (pif1.mem2proc_tag),
+
+        // Outputs
+        .proc2mem_command1 (pif1.proc2mem_command),
+        .proc2mem_addr1    (pif1.proc2mem_addr),
+        .proc2mem_data1    (pif1.proc2mem_data),
+        .proc2mem_size1    (pif1.proc2mem_size),
+
+        .pipeline_completed_insts1 (pif1.pipeline_completed_insts),
+        .pipeline_error_status1    (pif1.pipeline_error_status),
+        .pipeline_commit_wr_data1  (pif1.pipeline_commit_wr_data),
+        .pipeline_commit_wr_idx1   (pif1.pipeline_commit_wr_idx),
+        .pipeline_commit_wr_en1    (pif1.pipeline_commit_wr_en),
+        .pipeline_commit_NPC1      (pif1.pipeline_commit_NPC),
+
+        .if_NPC_dbg1       (pif1.if_NPC_dbg),
+        .if_inst_dbg1      (pif1.if_inst_dbg),
+        .if_valid_dbg1     (pif1.if_valid_dbg),
+        .if_id_NPC_dbg1    (pif1.if_id_NPC_dbg),
+        .if_id_inst_dbg1   (pif1.if_id_inst_dbg),
+        .if_id_valid_dbg1  (pif1.if_id_valid_dbg),
+        .id_ex_NPC_dbg1    (pif1.id_ex_NPC_dbg),
+        .id_ex_inst_dbg1   (pif1.id_ex_inst_dbg),
+        .id_ex_valid_dbg1  (pif1.id_ex_valid_dbg),
+        .ex_mem_NPC_dbg1   (pif1.ex_mem_NPC_dbg),
+        .ex_mem_inst_dbg1  (pif1.ex_mem_inst_dbg),
+        .ex_mem_valid_dbg1 (pif1.ex_mem_valid_dbg),
+        .mem_wb_NPC_dbg1   (pif1.mem_wb_NPC_dbg),
+        .mem_wb_inst_dbg1  (pif1.mem_wb_inst_dbg),
+        .mem_wb_valid_dbg1 (pif1.mem_wb_valid_dbg),
+        .ex_mem_packet_out1(pif1.ex_mem_packet_out),
+        .mem_wb_packet_out1(pif1.mem_wb_packet_out),
+
+        .clock(clock),
+        .reset(reset),
+        .packet1(pif0.mem_wb_packet_out),
+        .packet2(pif1.mem_wb_packet_out),
+        .fault_debug(QED_fault),
+
+        .trace1(trace1),
+        .trace2(trace2),
+        .head1_out(head1),
+        .head2_out(head2),
+        .has_fault_occured(has_fault_occured),
+        .faultCounterDebug(faultCounterDebug)
+    );
 
     // Instantiate the Pipeline
-    pipeline core0 (
-        // Inputs
-        .clock             (pif0.clock),
-        .reset             (pif0.reset),
-        .mem2proc_response (pif0.mem2proc_response),
-        .mem2proc_data     (pif0.mem2proc_data),
-        .mem2proc_tag      (pif0.mem2proc_tag),
+    // pipeline core0 (
+    //     // Inputs
+    //     .clock             (pif0.clock),
+    //     .reset             (pif0.reset),
+    //     .mem2proc_response (pif0.mem2proc_response),
+    //     .mem2proc_data     (pif0.mem2proc_data),
+    //     .mem2proc_tag      (pif0.mem2proc_tag),
 
-        // Outputs
-        .proc2mem_command (pif0.proc2mem_command),
-        .proc2mem_addr    (pif0.proc2mem_addr),
-        .proc2mem_data    (pif0.proc2mem_data),
-        .proc2mem_size    (pif0.proc2mem_size),
+    //     // Outputs
+    //     .proc2mem_command (pif0.proc2mem_command),
+    //     .proc2mem_addr    (pif0.proc2mem_addr),
+    //     .proc2mem_data    (pif0.proc2mem_data),
+    //     .proc2mem_size    (pif0.proc2mem_size),
 
-        .pipeline_completed_insts (pif0.pipeline_completed_insts),
-        .pipeline_error_status    (pif0.pipeline_error_status),
-        .pipeline_commit_wr_data  (pif0.pipeline_commit_wr_data),
-        .pipeline_commit_wr_idx   (pif0.pipeline_commit_wr_idx),
-        .pipeline_commit_wr_en    (pif0.pipeline_commit_wr_en),
-        .pipeline_commit_NPC      (pif0.pipeline_commit_NPC),
+    //     .pipeline_completed_insts (pif0.pipeline_completed_insts),
+    //     .pipeline_error_status    (pif0.pipeline_error_status),
+    //     .pipeline_commit_wr_data  (pif0.pipeline_commit_wr_data),
+    //     .pipeline_commit_wr_idx   (pif0.pipeline_commit_wr_idx),
+    //     .pipeline_commit_wr_en    (pif0.pipeline_commit_wr_en),
+    //     .pipeline_commit_NPC      (pif0.pipeline_commit_NPC),
 
-        .if_NPC_dbg       (pif0.if_NPC_dbg),
-        .if_inst_dbg      (pif0.if_inst_dbg),
-        .if_valid_dbg     (pif0.if_valid_dbg),
-        .if_id_NPC_dbg    (pif0.if_id_NPC_dbg),
-        .if_id_inst_dbg   (pif0.if_id_inst_dbg),
-        .if_id_valid_dbg  (pif0.if_id_valid_dbg),
-        .id_ex_NPC_dbg    (pif0.id_ex_NPC_dbg),
-        .id_ex_inst_dbg   (pif0.id_ex_inst_dbg),
-        .id_ex_valid_dbg  (pif0.id_ex_valid_dbg),
-        .ex_mem_NPC_dbg   (pif0.ex_mem_NPC_dbg),
-        .ex_mem_inst_dbg  (pif0.ex_mem_inst_dbg),
-        .ex_mem_valid_dbg (pif0.ex_mem_valid_dbg),
-        .mem_wb_NPC_dbg   (pif0.mem_wb_NPC_dbg),
-        .mem_wb_inst_dbg  (pif0.mem_wb_inst_dbg),
-        .mem_wb_valid_dbg (pif0.mem_wb_valid_dbg),
-        .ex_mem_packet_out(pif0.ex_mem_packet_out),
-        .mem_wb_packet_out(pif0.mem_wb_packet_out)
-    );
+    //     .if_NPC_dbg       (pif0.if_NPC_dbg),
+    //     .if_inst_dbg      (pif0.if_inst_dbg),
+    //     .if_valid_dbg     (pif0.if_valid_dbg),
+    //     .if_id_NPC_dbg    (pif0.if_id_NPC_dbg),
+    //     .if_id_inst_dbg   (pif0.if_id_inst_dbg),
+    //     .if_id_valid_dbg  (pif0.if_id_valid_dbg),
+    //     .id_ex_NPC_dbg    (pif0.id_ex_NPC_dbg),
+    //     .id_ex_inst_dbg   (pif0.id_ex_inst_dbg),
+    //     .id_ex_valid_dbg  (pif0.id_ex_valid_dbg),
+    //     .ex_mem_NPC_dbg   (pif0.ex_mem_NPC_dbg),
+    //     .ex_mem_inst_dbg  (pif0.ex_mem_inst_dbg),
+    //     .ex_mem_valid_dbg (pif0.ex_mem_valid_dbg),
+    //     .mem_wb_NPC_dbg   (pif0.mem_wb_NPC_dbg),
+    //     .mem_wb_inst_dbg  (pif0.mem_wb_inst_dbg),
+    //     .mem_wb_valid_dbg (pif0.mem_wb_valid_dbg),
+    //     .ex_mem_packet_out(pif0.ex_mem_packet_out),
+    //     .mem_wb_packet_out(pif0.mem_wb_packet_out)
+    // );
 
-    pipeline_buggy core1 (
-        // Inputs
-        .clock             (pif1.clock),
-        .reset             (pif1.reset),
-        .mem2proc_response (pif1.mem2proc_response),
-        .mem2proc_data     (pif1.mem2proc_data),
-        .mem2proc_tag      (pif1.mem2proc_tag),
+    // pipeline_buggy core1 (
+    //     // Inputs
+    //     .clock             (pif1.clock),
+    //     .reset             (pif1.reset),
+    //     .mem2proc_response (pif1.mem2proc_response),
+    //     .mem2proc_data     (pif1.mem2proc_data),
+    //     .mem2proc_tag      (pif1.mem2proc_tag),
 
-        // Outputs
-        .proc2mem_command (pif1.proc2mem_command),
-        .proc2mem_addr    (pif1.proc2mem_addr),
-        .proc2mem_data    (pif1.proc2mem_data),
-        .proc2mem_size    (pif1.proc2mem_size),
+    //     // Outputs
+    //     .proc2mem_command (pif1.proc2mem_command),
+    //     .proc2mem_addr    (pif1.proc2mem_addr),
+    //     .proc2mem_data    (pif1.proc2mem_data),
+    //     .proc2mem_size    (pif1.proc2mem_size),
 
-        .pipeline_completed_insts (pif1.pipeline_completed_insts),
-        .pipeline_error_status    (pif1.pipeline_error_status),
-        .pipeline_commit_wr_data  (pif1.pipeline_commit_wr_data),
-        .pipeline_commit_wr_idx   (pif1.pipeline_commit_wr_idx),
-        .pipeline_commit_wr_en    (pif1.pipeline_commit_wr_en),
-        .pipeline_commit_NPC      (pif1.pipeline_commit_NPC),
+    //     .pipeline_completed_insts (pif1.pipeline_completed_insts),
+    //     .pipeline_error_status    (pif1.pipeline_error_status),
+    //     .pipeline_commit_wr_data  (pif1.pipeline_commit_wr_data),
+    //     .pipeline_commit_wr_idx   (pif1.pipeline_commit_wr_idx),
+    //     .pipeline_commit_wr_en    (pif1.pipeline_commit_wr_en),
+    //     .pipeline_commit_NPC      (pif1.pipeline_commit_NPC),
 
-        .if_NPC_dbg       (pif1.if_NPC_dbg),
-        .if_inst_dbg      (pif1.if_inst_dbg),
-        .if_valid_dbg     (pif1.if_valid_dbg),
-        .if_id_NPC_dbg    (pif1.if_id_NPC_dbg),
-        .if_id_inst_dbg   (pif1.if_id_inst_dbg),
-        .if_id_valid_dbg  (pif1.if_id_valid_dbg),
-        .id_ex_NPC_dbg    (pif1.id_ex_NPC_dbg),
-        .id_ex_inst_dbg   (pif1.id_ex_inst_dbg),
-        .id_ex_valid_dbg  (pif1.id_ex_valid_dbg),
-        .ex_mem_NPC_dbg   (pif1.ex_mem_NPC_dbg),
-        .ex_mem_inst_dbg  (pif1.ex_mem_inst_dbg),
-        .ex_mem_valid_dbg (pif1.ex_mem_valid_dbg),
-        .mem_wb_NPC_dbg   (pif1.mem_wb_NPC_dbg),
-        .mem_wb_inst_dbg  (pif1.mem_wb_inst_dbg),
-        .mem_wb_valid_dbg (pif1.mem_wb_valid_dbg),
-        .ex_mem_packet_out(pif1.ex_mem_packet_out),
-        .mem_wb_packet_out(pif1.mem_wb_packet_out)
-    );
+    //     .if_NPC_dbg       (pif1.if_NPC_dbg),
+    //     .if_inst_dbg      (pif1.if_inst_dbg),
+    //     .if_valid_dbg     (pif1.if_valid_dbg),
+    //     .if_id_NPC_dbg    (pif1.if_id_NPC_dbg),
+    //     .if_id_inst_dbg   (pif1.if_id_inst_dbg),
+    //     .if_id_valid_dbg  (pif1.if_id_valid_dbg),
+    //     .id_ex_NPC_dbg    (pif1.id_ex_NPC_dbg),
+    //     .id_ex_inst_dbg   (pif1.id_ex_inst_dbg),
+    //     .id_ex_valid_dbg  (pif1.id_ex_valid_dbg),
+    //     .ex_mem_NPC_dbg   (pif1.ex_mem_NPC_dbg),
+    //     .ex_mem_inst_dbg  (pif1.ex_mem_inst_dbg),
+    //     .ex_mem_valid_dbg (pif1.ex_mem_valid_dbg),
+    //     .mem_wb_NPC_dbg   (pif1.mem_wb_NPC_dbg),
+    //     .mem_wb_inst_dbg  (pif1.mem_wb_inst_dbg),
+    //     .mem_wb_valid_dbg (pif1.mem_wb_valid_dbg),
+    //     .ex_mem_packet_out(pif1.ex_mem_packet_out),
+    //     .mem_wb_packet_out(pif1.mem_wb_packet_out)
+    // );
 
 
     // Instantiate the Data Memory
@@ -250,34 +345,31 @@ module testbench;
         .mem2proc_tag      (pif1.mem2proc_tag)
     );
 
-    QEDV2 #(.N(10)) qed (
-        .clk(clock),
-        .reset(reset),
-        .packet1(pif0.mem_wb_packet_out),
-        .packet2(pif1.mem_wb_packet_out),
-        .fault(QED_fault)
-    );
+    // QEDV2 #(.N(10)) qed (
+    //     .clk(clock),
+    //     .reset(reset),
+    //     .packet1(pif0.mem_wb_packet_out),
+    //     .packet2(pif1.mem_wb_packet_out),
+    //     .fault(QED_fault)
+    // );
 
-
-    logic [$clog2(QED_TRACE_FIFO_SIZE)-1:0] head1, head2;
-    int faultCounterDebug;
-    QEDTrace
-    #(.FIFO_SIZE(QED_TRACE_FIFO_SIZE))
-    qedtrace (
-        .clk(clock),
-        .reset(reset),
-        .packet1(pif0.mem_wb_packet_out),
-        .packet2(pif1.mem_wb_packet_out),
-        .fault(QED_fault),
-        .trace1(trace1),
-        .trace2(trace2),
-        .head1_out(head1),
-        .head2_out(head2),
-        .has_fault_occured(has_fault_occured),
-        .faultCounterDebug(faultCounterDebug)
+    // QEDTrace
+    // #(.FIFO_SIZE(QED_TRACE_FIFO_SIZE))
+    // qedtrace (
+    //     .clk(clock),
+    //     .reset(reset),
+    //     .packet1(pif0.mem_wb_packet_out),
+    //     .packet2(pif1.mem_wb_packet_out),
+    //     .fault(QED_fault),
+    //     .trace1(trace1),
+    //     .trace2(trace2),
+    //     .head1_out(head1),
+    //     .head2_out(head2),
+    //     .has_fault_occured(has_fault_occured),
+    //     .faultCounterDebug(faultCounterDebug)
         
 
-    );
+    // );
 
 
     // Generate System Clock
