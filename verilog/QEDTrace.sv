@@ -56,7 +56,7 @@ module QEDTrace
                 has_fault_occured <= has_fault_occured;
             end
 
-            if (!has_fault_occured) begin
+            if (!has_fault_occured & packet1.valid) begin
                 fifo1[head1] <= packet1;
                 head1 <= (head1 == FIFO_SIZE-1) ? 0 : head1 + 1;
             end else begin
@@ -64,7 +64,7 @@ module QEDTrace
             end
 
             // FIFO2 Operation
-            if (!has_fault_occured) begin
+            if (!has_fault_occured & packet2.valid) begin
                 fifo2[head2] <= packet2;
                 head2 <= (head2 == FIFO_SIZE-1) ? 0 : head2 + 1;
             end else begin

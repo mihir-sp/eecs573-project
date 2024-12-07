@@ -2,7 +2,7 @@
 
 module QEDV2 #(
     parameter int FIFO_DEPTH = 16,      // Depth of the FIFO
-    parameter int N = 2               // Add to FIFO every Nth clock cycle
+    parameter int N = 1               // Add to FIFO every Nth clock cycle
 )(
     input logic clk,
     input logic reset,

@@ -455,7 +455,7 @@ module testbench;
             
             // logic [$clog2(QED_TRACE_FIFO_SIZE)-1:0] temp; 
             
-            for (int i = 0; i < QED_TRACE_FIFO_SIZE; i++) begin
+            for (int i = QED_TRACE_FIFO_SIZE-1; i >= 0 ; i--) begin
 
 
                 // $cast(head1cast, head1);
@@ -467,7 +467,7 @@ module testbench;
                 // modHead2 = (head2cast + i) % QED_TRACE_FIFO_SIZE;
                 modHead1 = head1+i;
                 modHead2 = head2 +i;
-                $display("FIFO1[%0d] = result:%h  %s FIFO2[%0d] = result:%h %s", modHead1, trace1[modHead1].result, alu_func_to_string(trace1[modHead1].inst), modHead2, trace2[modHead2].result , alu_func_to_string(trace1[modHead2].inst));
+                $display("FIFO1[%0d] = result:%h NPC:%h valid:%d %s FIFO2[%0d] = result:%h NPC:%h valid:%d %s", modHead1, trace1[modHead1].result, trace1[modHead1].NPC, trace1[modHead1].valid,  alu_func_to_string(trace1[modHead1].inst), modHead2, trace2[modHead2].result ,trace2[modHead2].NPC, trace2[modHead2].valid, alu_func_to_string(trace1[modHead2].inst));
             end
         endfunction
         
@@ -519,7 +519,7 @@ module testbench;
 
 
             // deal with any halting conditions
-            if(pif0.pipeline_error_status != NO_ERROR || pif0.debug_counter >160000)begin
+            if(pif0.pipeline_error_status != NO_ERROR || pif0.debug_counter >16000000)begin
                 $display("@@@ Unified Memory contents hex on left, decimal on right: ");
                 show_mem_with_decimal0(0,`MEM_64BIT_LINES - 1);
                 // 8Bytes per line, 16kB total
@@ -586,7 +586,7 @@ module testbench;
             end
 
             // deal with any halting conditions
-            if((pif1.pipeline_error_status != NO_ERROR || pif1.debug_counter >160000) && buggyEnded == 0)begin
+            if((pif1.pipeline_error_status != NO_ERROR || pif1.debug_counter >1600000) && buggyEnded == 0)begin
                 $display("@@@ Unified Memory contents hex on left, decimal on right: ");
                 show_mem_with_decimal1(0,`MEM_64BIT_LINES - 1);
                 // 8Bytes per line, 16kB total
