@@ -185,7 +185,7 @@ assign fault_debug = fault;
 
 
 
-        QEDV2 #(.N(10)) qed (
+        QEDV2 #(.N(16)) qed (
         .clk(clock),
         .reset(reset),
         .packet1(mem_wb_packet_out0),

@@ -702,13 +702,15 @@ module testbench;
                 $display("@@@\n@@");
                 $display("Core1 ended execution debug_count: %0d", pif1.debug_counter);
                 show_clk_count1;
-                @(done);
+                // @(done);
                 print_close(); // close the pipe_print output file
                 $fclose(wb_fileno1);
                 buggyEnded = 1;
-               
+
                 #100;
-                // print_trace;
+                print_trace;
+                $finish;
+                
             end
             pif1.debug_counter <= pif1.debug_counter + 1;
         end // if(reset)
