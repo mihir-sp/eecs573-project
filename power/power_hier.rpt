@@ -1,0 +1,60 @@
+****************************************
+Report : Time Based Power
+	-hierarchy
+	-verbose
+	-nosplit
+Design : pipeline_top
+Version: T-2022.03-SP3
+Date   : Sun Dec  8 00:12:25 2024
+****************************************
+
+Simulation Periods: 0 ns - 10000 ns
+
+Sampling Interval: 0.1 ns
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+
+Operating Conditions: <nominal>   Library: lec25dscc25_TT
+Wire Load Model Mode: top
+
+Cell               Design       Wire_model  Library       Selection_type
+--------------------------------------------------------------------------------
+                   pipeline_top tsmcwire    lec25dscc25_TT user-specified
+
+Power-specific unit information :
+    Voltage Units = 1 V
+    Capacitance Units = 1 pf
+    Time Units = 1 ns
+    Dynamic Power Units = 1 W
+    Leakage Power Units = 1 W
+
+
+
+                                      Int      Switch   Leak     Peak     Peak            Glitch   X-tran   Total
+Hierarchy                             Power    Power    Power    Power    Time            Power    Power    Power    %
+-----------------------------------------------------------------------------------------------------------------------------
+pipeline_top                          6.03e-02 2.29e-02 1.34e-06   20.889  1756.0-1756.1     0.000 9.56e-04 8.32e-02 100.0
+  core0/stage_ex_0/alu_0/sll_50 (pipeline_top_DW01_ash_1) 2.38e-04 8.74e-05 1.29e-08    0.182  6946.0-6946.1     0.000    0.000 3.25e-04   0.4
+  core0/stage_ex_0/alu_0/mult_36 (pipeline_top_DW02_mult_3) 4.35e-03 2.12e-03 8.43e-08    3.738  2236.0-2236.1     0.000    0.000 6.47e-03   7.8
+    FS_1 (pipeline_top_DW01_add_7)    1.60e-04 8.59e-05 3.50e-09    0.151  9976.0-9976.1     0.000    0.000 2.46e-04   0.3
+  core1/stage_ex_0/alu_0/sub_56 (pipeline_top_DW01_sub_0) 2.00e-04 6.59e-05 2.44e-09    0.181   436.0-436.1      0.000    0.000 2.66e-04   0.3
+  core0/stage_ex_0/alu_0/sub_43 (pipeline_top_DW01_sub_1) 2.00e-04 6.59e-05 2.44e-09    0.181   436.0-436.1      0.000    0.000 2.66e-04   0.3
+  core1/stage_ex_0/alu_0/add_55 (pipeline_top_DW01_add_0) 1.66e-04 2.53e-05 2.27e-09    0.115  2266.0-2266.1     0.000    0.000 1.91e-04   0.2
+  core0/stage_ex_0/alu_0/add_42 (pipeline_top_DW01_add_1) 1.66e-04 2.53e-05 2.27e-09    0.115  2266.0-2266.1     0.000    0.000 1.91e-04   0.2
+  core1/stage_ex_0/alu_0/mult_37 (pipeline_top_DW02_mult_1) 4.34e-03 2.12e-03 8.43e-08    3.720  2866.0-2866.1     0.000    0.000 6.46e-03   7.8
+    FS_1 (pipeline_top_DW01_add_5)    1.60e-04 8.59e-05 3.50e-09    0.151  9976.0-9976.1     0.000    0.000 2.46e-04   0.3
+  r331 (pipeline_top_DW01_add_3)      1.23e-05 2.59e-06 2.96e-09 1.78e-02  1036.0-1036.1     0.000    0.000 1.49e-05   0.0
+  r335 (pipeline_top_DW02_mult_2)     3.98e-03 1.98e-03 8.40e-08    3.918  1156.0-1156.1     0.000    0.000 5.96e-03   7.2
+    FS_1 (pipeline_top_DW01_add_6)    8.70e-05 4.83e-05 3.37e-09    0.124  6286.0-6286.1     0.000    0.000 1.35e-04   0.2
+  r343 (pipeline_top_DW01_cmp6_14)    9.86e-05 4.44e-05 1.25e-09 7.10e-02  3406.0-3406.1     0.000 4.40e-05 1.43e-04   0.2
+  r349 (pipeline_top_DW01_add_2)      1.23e-05 2.59e-06 2.96e-09 1.78e-02  1036.0-1036.1     0.000    0.000 1.49e-05   0.0
+  r353 (pipeline_top_DW02_mult_0)     3.96e-03 1.98e-03 8.40e-08    3.908  1156.0-1156.1     0.000    0.000 5.95e-03   7.1
+    FS_1 (pipeline_top_DW01_add_4)    8.71e-05 4.83e-05 3.37e-09    0.124  6286.0-6286.1     0.000    0.000 1.35e-04   0.2
+  r361 (pipeline_top_DW01_cmp6_13)    8.78e-05 4.14e-05 1.25e-09 7.35e-02  1756.0-1756.1     0.000 4.15e-05 1.29e-04   0.2
+  qed/ne_118 (pipeline_top_DW01_cmp6_0) 8.83e-06 1.88e-06 1.09e-09 3.71e-02  5776.0-5776.1     0.000 1.07e-05 1.07e-05   0.0
+  qedtrace/add_49 (pipeline_top_DW01_inc_0_DW01_inc_8) 7.91e-06 3.07e-06 8.34e-11 1.82e-02  7756.0-7756.1     0.000    0.000 1.10e-05   0.0
+  core1/stage_ex_0/alu_0/sll_63 (pipeline_top_DW01_ash_0) 2.38e-04 8.74e-05 1.29e-08    0.181  6946.0-6946.1     0.000    0.000 3.26e-04   0.4
+1

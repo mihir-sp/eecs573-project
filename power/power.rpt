@@ -1,0 +1,63 @@
+****************************************
+Report : Time Based Power
+	-verbose
+	-nosplit
+Design : pipeline_top
+Version: T-2022.03-SP3
+Date   : Sun Dec  8 00:12:25 2024
+****************************************
+
+Simulation Periods: 0 ns - 10000 ns
+
+Sampling Interval: 0.1 ns
+
+Library(s) Used:
+
+    lec25dscc25_TT (File: /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db)
+
+
+Operating Conditions: <nominal>   Library: lec25dscc25_TT
+Wire Load Model Mode: top
+
+Cell               Design       Wire_model  Library       Selection_type
+--------------------------------------------------------------------------------
+                   pipeline_top tsmcwire    lec25dscc25_TT user-specified
+
+Power-specific unit information :
+    Voltage Units = 1 V
+    Capacitance Units = 1 pf
+    Time Units = 1 ns
+    Dynamic Power Units = 1 W
+    Leakage Power Units = 1 W
+
+
+
+  Attributes
+  ----------
+      i  -  Including register clock pin internal power
+      u  -  User defined power group
+
+                        Internal  Switching  Leakage    Total               Peak         Peak            Glitch    X-tran
+Power Group             Power     Power      Power      Power   (     %)    Power        Time            Power     Power    Attrs
+----------------------------------------------------------------------------------------------------------------------------------
+clock_network              0.0153    0.0000    0.0000    0.0153 (18.36%)      N/A         N/A             0.0000    0.0000  i
+register                4.801e-04 4.280e-05 3.302e-07 5.232e-04 ( 0.63%)      N/A         N/A             0.0000    0.0000  
+combinational              0.0240    0.0222 7.874e-07    0.0462 (55.48%)      N/A         N/A             0.0000 7.589e-04  
+sequential                 0.0205 7.155e-04 2.255e-07    0.0213 (25.54%)      N/A         N/A             0.0000 1.970e-04  
+memory                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)      N/A         N/A             0.0000    0.0000  
+io_pad                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)      N/A         N/A             0.0000    0.0000  
+black_box                  0.0000    0.0000    0.0000    0.0000 ( 0.00%)      N/A         N/A             0.0000    0.0000  
+
+  Net Switching Power  =    0.0229   (27.55%)
+  Cell Internal Power  =    0.0603   (72.45%)
+  Cell Leakage Power   = 1.343e-06   ( 0.00%)
+                         ---------
+Total Power            =    0.0832  (100.00%)
+
+X Transition Power     = 9.559e-04
+Glitching Power        =    0.0000
+
+Peak Power             =   20.8894
+Peak Time              =    1756.0
+
+1

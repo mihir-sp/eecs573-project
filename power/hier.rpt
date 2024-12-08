@@ -1,0 +1,283 @@
+****************************************
+Report : hierarchy
+Design : pipeline_top
+Version: T-2022.03-SP3
+Date   : Sun Dec  8 00:12:25 2024
+****************************************
+
+    and2s1                          lec25dscc25_TT
+    and2s3                          lec25dscc25_TT
+    and3s1                          lec25dscc25_TT
+    and3s2                          lec25dscc25_TT
+    and4s1                          lec25dscc25_TT
+    aoai1112s2                      lec25dscc25_TT
+    aoai122s2                       lec25dscc25_TT
+    aoi123s1                        lec25dscc25_TT
+    aoi13s2                         lec25dscc25_TT
+    aoi211s1                        lec25dscc25_TT
+    aoi21s1                         lec25dscc25_TT
+    aoi21s2                         lec25dscc25_TT
+    aoi221s1                        lec25dscc25_TT
+    aoi222s1                        lec25dscc25_TT
+    aoi22s1                         lec25dscc25_TT
+    aoi22s2                         lec25dscc25_TT
+    aoi23s1                         lec25dscc25_TT
+    aoi23s2                         lec25dscc25_TT
+    aoi33s1                         lec25dscc25_TT
+    aoi42s1                         lec25dscc25_TT
+    dffcs1                          lec25dscc25_TT
+    dffcs2                          lec25dscc25_TT
+    dffs1                           lec25dscc25_TT
+    dffs2                           lec25dscc25_TT
+    dffscs2                         lec25dscc25_TT
+    dffss1                          lec25dscc25_TT
+    dffss2                          lec25dscc25_TT
+    dsmxc31s2                       lec25dscc25_TT
+    hadd1s1                         lec25dscc25_TT
+    hi1s1                           lec25dscc25_TT
+    i1s1                            lec25dscc25_TT
+    i1s3                            lec25dscc25_TT
+    ib1s1                           lec25dscc25_TT
+    mxi21s2                         lec25dscc25_TT
+    nb1s1                           lec25dscc25_TT
+    nb1s2                           lec25dscc25_TT
+    nnd2s1                          lec25dscc25_TT
+    nnd2s2                          lec25dscc25_TT
+    nnd2s3                          lec25dscc25_TT
+    nnd3s1                          lec25dscc25_TT
+    nnd3s2                          lec25dscc25_TT
+    nnd4s1                          lec25dscc25_TT
+    nnd5s3                          lec25dscc25_TT
+    nor2s1                          lec25dscc25_TT
+    nor2s2                          lec25dscc25_TT
+    nor3s1                          lec25dscc25_TT
+    nor5s1                          lec25dscc25_TT
+    nor6s1                          lec25dscc25_TT
+    oai1112s1                       lec25dscc25_TT
+    oai1112s2                       lec25dscc25_TT
+    oai13s2                         lec25dscc25_TT
+    oai211s1                        lec25dscc25_TT
+    oai211s2                        lec25dscc25_TT
+    oai21s1                         lec25dscc25_TT
+    oai21s2                         lec25dscc25_TT
+    oai221s1                        lec25dscc25_TT
+    oai221s2                        lec25dscc25_TT
+    oai2222s3                       lec25dscc25_TT
+    oai222s1                        lec25dscc25_TT
+    oai222s3                        lec25dscc25_TT
+    oai22s1                         lec25dscc25_TT
+    oai22s2                         lec25dscc25_TT
+    oai24s1                         lec25dscc25_TT
+    oai322s1                        lec25dscc25_TT
+    oai32s1                         lec25dscc25_TT
+    or2s1                           lec25dscc25_TT
+    or4s1                           lec25dscc25_TT
+    or5s1                           lec25dscc25_TT
+    pipeline_top_DW01_add_0          
+        and2s1                      lec25dscc25_TT
+        fadd1s1                     lec25dscc25_TT
+        fadd1s2                     lec25dscc25_TT
+        xor2s1                      lec25dscc25_TT
+    pipeline_top_DW01_add_1          
+        and2s1                      lec25dscc25_TT
+        fadd1s1                     lec25dscc25_TT
+        fadd1s2                     lec25dscc25_TT
+        xor2s1                      lec25dscc25_TT
+    pipeline_top_DW01_add_2          
+        and2s1                      lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        xor2s2                      lec25dscc25_TT
+    pipeline_top_DW01_add_3          
+        and2s1                      lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        xor2s2                      lec25dscc25_TT
+    pipeline_top_DW01_ash_0          
+        and2s1                      lec25dscc25_TT
+        dsmxc31s2                   lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        mxi21s2                     lec25dscc25_TT
+        nnd2s1                      lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+    pipeline_top_DW01_ash_1          
+        and2s1                      lec25dscc25_TT
+        dsmxc31s2                   lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        mxi21s2                     lec25dscc25_TT
+        nnd2s1                      lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+    pipeline_top_DW01_cmp6_0         
+        and2s1                      lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nnd4s1                      lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+        oai22s1                     lec25dscc25_TT
+        or4s1                       lec25dscc25_TT
+        or5s1                       lec25dscc25_TT
+        xnr2s1                      lec25dscc25_TT
+    pipeline_top_DW01_cmp6_13        
+        and2s1                      lec25dscc25_TT
+        aoi123s1                    lec25dscc25_TT
+        aoi211s1                    lec25dscc25_TT
+        aoi221s1                    lec25dscc25_TT
+        aoi23s1                     lec25dscc25_TT
+        aoi42s1                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nnd2s1                      lec25dscc25_TT
+        nnd4s1                      lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+        oai1112s1                   lec25dscc25_TT
+        oai211s1                    lec25dscc25_TT
+        oai21s1                     lec25dscc25_TT
+        oai22s1                     lec25dscc25_TT
+        oai322s1                    lec25dscc25_TT
+        or2s1                       lec25dscc25_TT
+        or4s1                       lec25dscc25_TT
+        or5s1                       lec25dscc25_TT
+    pipeline_top_DW01_cmp6_14        
+        and2s1                      lec25dscc25_TT
+        aoi123s1                    lec25dscc25_TT
+        aoi211s1                    lec25dscc25_TT
+        aoi221s1                    lec25dscc25_TT
+        aoi23s1                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nnd2s1                      lec25dscc25_TT
+        nnd4s1                      lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+        oai21s1                     lec25dscc25_TT
+        oai22s1                     lec25dscc25_TT
+        oai322s1                    lec25dscc25_TT
+        or2s1                       lec25dscc25_TT
+        or4s1                       lec25dscc25_TT
+        or5s1                       lec25dscc25_TT
+    pipeline_top_DW01_inc_0_DW01_inc_8
+                                     
+        hadd1s1                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        xor2s1                      lec25dscc25_TT
+    pipeline_top_DW01_sub_0          
+        fadd1s2                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nnd2s2                      lec25dscc25_TT
+        xnr2s1                      lec25dscc25_TT
+    pipeline_top_DW01_sub_1          
+        fadd1s2                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nnd2s2                      lec25dscc25_TT
+        xnr2s1                      lec25dscc25_TT
+    pipeline_top_DW02_mult_0         
+        and2s1                      lec25dscc25_TT
+        and3s1                      lec25dscc25_TT
+        fadd1s2                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        i1s2                        lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+        pipeline_top_DW01_add_4      
+            and2s1                  lec25dscc25_TT
+            and4s1                  lec25dscc25_TT
+            aoi21s1                 lec25dscc25_TT
+            aoi22s1                 lec25dscc25_TT
+            ib1s1                   lec25dscc25_TT
+            nnd2s1                  lec25dscc25_TT
+            nnd3s1                  lec25dscc25_TT
+            nnd4s1                  lec25dscc25_TT
+            nor2s1                  lec25dscc25_TT
+            nor4s1                  lec25dscc25_TT
+            nor5s1                  lec25dscc25_TT
+            oai211s1                lec25dscc25_TT
+            oai21s1                 lec25dscc25_TT
+            or2s1                   lec25dscc25_TT
+            or4s1                   lec25dscc25_TT
+            xnr2s1                  lec25dscc25_TT
+            xor2s1                  lec25dscc25_TT
+        xor2s1                      lec25dscc25_TT
+    pipeline_top_DW02_mult_1         
+        and2s1                      lec25dscc25_TT
+        fadd1s2                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        i1s2                        lec25dscc25_TT
+        i1s3                        lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+        pipeline_top_DW01_add_5      
+            and2s1                  lec25dscc25_TT
+            and4s1                  lec25dscc25_TT
+            aoi21s1                 lec25dscc25_TT
+            aoi22s1                 lec25dscc25_TT
+            hi1s1                   lec25dscc25_TT
+            ib1s1                   lec25dscc25_TT
+            nnd2s1                  lec25dscc25_TT
+            nnd3s1                  lec25dscc25_TT
+            nnd4s1                  lec25dscc25_TT
+            nor2s1                  lec25dscc25_TT
+            nor4s1                  lec25dscc25_TT
+            nor5s1                  lec25dscc25_TT
+            oai211s1                lec25dscc25_TT
+            oai21s1                 lec25dscc25_TT
+            or2s1                   lec25dscc25_TT
+            or4s1                   lec25dscc25_TT
+            xnr2s1                  lec25dscc25_TT
+            xor2s1                  lec25dscc25_TT
+        xor2s1                      lec25dscc25_TT
+    pipeline_top_DW02_mult_2         
+        and2s1                      lec25dscc25_TT
+        and3s1                      lec25dscc25_TT
+        fadd1s2                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        i1s2                        lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+        pipeline_top_DW01_add_6      
+            and2s1                  lec25dscc25_TT
+            and4s1                  lec25dscc25_TT
+            aoi21s1                 lec25dscc25_TT
+            aoi22s1                 lec25dscc25_TT
+            ib1s1                   lec25dscc25_TT
+            nnd2s1                  lec25dscc25_TT
+            nnd3s1                  lec25dscc25_TT
+            nnd4s1                  lec25dscc25_TT
+            nor2s1                  lec25dscc25_TT
+            nor4s1                  lec25dscc25_TT
+            nor5s1                  lec25dscc25_TT
+            oai211s1                lec25dscc25_TT
+            oai21s1                 lec25dscc25_TT
+            or2s1                   lec25dscc25_TT
+            or4s1                   lec25dscc25_TT
+            xnr2s1                  lec25dscc25_TT
+            xor2s1                  lec25dscc25_TT
+        xor2s1                      lec25dscc25_TT
+    pipeline_top_DW02_mult_3         
+        and2s1                      lec25dscc25_TT
+        fadd1s2                     lec25dscc25_TT
+        hi1s1                       lec25dscc25_TT
+        i1s2                        lec25dscc25_TT
+        i1s3                        lec25dscc25_TT
+        ib1s1                       lec25dscc25_TT
+        nor2s1                      lec25dscc25_TT
+        pipeline_top_DW01_add_7      
+            and2s1                  lec25dscc25_TT
+            and4s1                  lec25dscc25_TT
+            aoi21s1                 lec25dscc25_TT
+            aoi22s1                 lec25dscc25_TT
+            hi1s1                   lec25dscc25_TT
+            ib1s1                   lec25dscc25_TT
+            nnd2s1                  lec25dscc25_TT
+            nnd3s1                  lec25dscc25_TT
+            nnd4s1                  lec25dscc25_TT
+            nor2s1                  lec25dscc25_TT
+            nor4s1                  lec25dscc25_TT
+            nor5s1                  lec25dscc25_TT
+            oai211s1                lec25dscc25_TT
+            oai21s1                 lec25dscc25_TT
+            or2s1                   lec25dscc25_TT
+            or4s1                   lec25dscc25_TT
+            xnr2s1                  lec25dscc25_TT
+            xor2s1                  lec25dscc25_TT
+        xor2s1                      lec25dscc25_TT
+    xnr2s1                          lec25dscc25_TT
+    xor2s1                          lec25dscc25_TT
+1

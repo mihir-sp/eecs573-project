@@ -1,0 +1,236 @@
+pt_shell -f pp.tcl  | tee pp.log
+
+                                 PrimeTime (R)
+
+               Version T-2022.03-SP3 for linux64 - Jul 12, 2022 
+
+                    Copyright (c) 1988 - 2022 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+#####################################################
+#Enable power analysis
+#####################################################
+set power_enable_analysis "true"
+Information: Checked out license 'PrimePower' (PT-019)
+true
+#####################################################
+#Perform vector analysis
+#####################################################
+#write_activity_waveforms
+#####################################################
+#Read design data & technology
+#####################################################
+source "./envset.tcl"
+1000.0
+1000.0
+set_app_var link_path $LINK_PATH
+* /afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db
+read_verilog "$NETLIST_FILE"
+1
+list_design
+Loading verilog file '/home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg'
+Loading db file '/afs/umich.edu/class/eecs470/lib/synopsys/lec25dscc25_TT.db'
+
+Design Registry:
+ *  pipeline_top_DW01_inc_0_DW01_inc_8   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_inc_0_DW01_inc_8
+    pipeline_top_DW01_cmp6_0   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_cmp6_0
+    pipeline_top_DW01_ash_0   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_ash_0
+    pipeline_top_DW01_sub_0   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_sub_0
+    pipeline_top_DW01_add_0   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_0
+    pipeline_top_DW01_ash_1   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_ash_1
+    pipeline_top_DW01_sub_1   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_sub_1
+    pipeline_top_DW01_add_1   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_1
+    pipeline_top_DW01_cmp6_13   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_cmp6_13
+    pipeline_top_DW01_add_2   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_2
+    pipeline_top_DW01_cmp6_14   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_cmp6_14
+    pipeline_top_DW01_add_3   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_3
+    pipeline_top_DW01_add_7   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_7
+    pipeline_top_DW02_mult_3   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW02_mult_3
+    pipeline_top_DW01_add_6   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_6
+    pipeline_top_DW02_mult_2   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW02_mult_2
+    pipeline_top_DW01_add_5   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_5
+    pipeline_top_DW02_mult_1   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW02_mult_1
+    pipeline_top_DW01_add_4   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW01_add_4
+    pipeline_top_DW02_mult_0   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top_DW02_mult_0
+    pipeline_top   /home/isaacto/573-new-new/mihir_synthesis/synth/pipeline_top.vg:pipeline_top
+
+1
+current_design $TOP_DESIGN
+Information: current_design won't return any data before link (DES-071)
+link
+Linking design pipeline_top...
+Information: Removing 20 unneeded designs..... (LNK-034)
+Information: 252 (77.06%) library cells are unused in library lec25dscc25_TT..... (LNK-045)
+Information: total 252 library cells are unused (LNK-046)
+Design 'pipeline_top' was successfully linked.
+Information: There are 39810 leaf cells, ports, hiers and 48927 nets in the design (LNK-047)
+1
+read_sdc "$SDC_FILE"
+
+Reading SDC version 2.1...
+1
+1
+set power_model_preference "ccs"
+ccs
+#####################################################
+#Specify variables
+#####################################################
+#set_operating_conditions 
+set power_limit_extrapolation_range "false"
+false
+#####################################################
+#Perform timing analysis
+#####################################################
+update_timing
+Information: Building multi voltage information for entire design. (MV-022)
+Warning: Some timing arcs have been disabled for breaking timing loops or because of constant propagation. Use the 'report_disable_timing' command to get the list of these disabled timing arcs. (PTE-003)
+1
+#####################################################
+#Check for potential errors that might affect accuracy
+#####################################################
+check_power
+Information: Checking 'out_of_table_range'.
+Warning: There are 4790 out_of_range ramps.
+Warning: There are 1689 out_of_range loads.
+Information: Checking 'missing_table'.
+Information: Checking 'missing_function'.
+0
+#####################################################
+#Select power analysis mode
+#####################################################
+#set_app_var power_analysis_mode "averaged"
+set_app_var power_analysis_mode "time_based"
+Information: Switched to Time_based power analysis mode.
+             Activity data, power analysis options and results are reset.
+             Please provide activity data for analysis in the current mode.
+time_based
+set_host_options -max_cores 4
+0
+#####################################################
+#Specify switching activity data
+#####################################################
+#set_switching_activity
+read_vcd -strip_path $STRIP_PATH $ACTIVITY_FILE -time { 0.0 1000.0}
+
+======================================================================
+Summary:
+Total number of nets = 46272
+Number of annotated nets = 46272 (100.00%)
+Total number of leaf cells = 34525
+Number of fully annotated leaf cells = 33905 (98.20%)
+======================================================================
+
+1
+#saif(switching activity interface) : only in averaged power analysis mode
+#vcd (verilog change dump)          : both
+#fsdb(fast switching data dump)     : both
+report_switching_activity -list_not_annotated
+****************************************
+Report : Switching Activity
+	-list_not_annotated
+Design : pipeline_top
+Version: T-2022.03-SP3
+Date   : Sun Dec  8 00:09:32 2024
+****************************************
+
+ Switching Activity Overview Statistics for "pipeline_top"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                  From Activity     From         From         From             From            From                                                            Not
+Object Type       File (%)          SSA (%)      SSA Force (%) SSA Force (%)   SCA (%)         Clock (%)       Default (%)     Propagated(%)   Implied(%)      Annotated(%)  Total
+                                                 Annotated    Implied                                                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Nets             46272(100.00%)    0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      46272
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Nets Driven by
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Primary Input     360(100.00%)      0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      360
+Tri-State         0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+Black Box         0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+Sequential        14774(100.00%)    0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      14774
+Combinational     31138(100.00%)    0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      31138
+Memory            0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+Clock Gate        0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Static Probability Overview Statistics for "pipeline_top"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                  From Activity     From         From         From             From            From                                                            Not
+Object Type       File (%)          SSA (%)      SSA Force (%) SSA Force (%)   SCA (%)         Clock (%)       Default (%)     Propagated(%)   Implied(%)      Annotated(%)  Total
+                                                 Annotated    Implied                                                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Nets             46272(100.00%)    0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      46272
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Nets Driven by
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Primary Input     360(100.00%)      0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      360
+Tri-State         0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+Black Box         0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+Sequential        14774(100.00%)    0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      14774
+Combinational     31138(100.00%)    0(0.00%)     0(0.00%)     0(0.00%)         0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)        0(0.00%)      31138
+Memory            0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+Clock Gate        0(0%)             0(0%)        0(0%)        0(0%)            0(0%)           0(0%)           0(0%)           0(0%)           0(0%)           0(0%)         0
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+List of nonannotated nets :
+1
+#####################################################
+#Specify options for power analysis
+#####################################################
+set_power_analysis_options
+#####################################################
+#Perform power analysis
+#####################################################
+update_power
+Information: Running time_based power analysis... (PWR-601)
+Information: Reading vcd file '/home/isaacto/573-new-new/mihir_synthesis/power/pipeline_top.vcd'
+Information: The waveform options are:
+		File name:	primetime_px.fsdb
+		File format:	fsdb
+		Time interval:	0.1ns
+		Hierarchical level:	all
+
+Information: Power analysis is running, please wait ...
+
+ Last event time = 256.000000 ns  Last event time = 346.000000 ns  Last event time = 376.000000 ns  Last event time = 466.000000 ns  Last event time = 555.000000 ns  Last event time = 586.000000 ns  Last event time = 616.000000 ns  Last event time = 766.000000 ns  Last event time = 856.000000 ns Information: analysis is done for time window (0ns - 1000ns)
+
+Information: Total simulation time = 1000.000000 ns
+1
+#####################################################
+#Generate report
+#####################################################
+report_power -nosplit -verbose > "power.rpt"
+report_power -nosplit -verbose -hier > "power_hier.rpt"
+report_hierarchy > "hier.rpt"
+report_units > "units.rpt"
+quit
+Information: Defining new variable 'TOP_DESIGN'. (CMD-041)
+Information: Defining new variable 'NETLIST_FILE'. (CMD-041)
+Information: Defining new variable 'LINK_PATH'. (CMD-041)
+Information: Defining new variable 'STRIP_PATH'. (CMD-041)
+Information: Defining new variable 'START_TIME'. (CMD-041)
+Information: Defining new variable 'SDC_FILE'. (CMD-041)
+Information: Defining new variable 'CURRENT_PATH'. (CMD-041)
+Information: Defining new variable 'END_TIME'. (CMD-041)
+Information: Defining new variable 'ACTIVITY_FILE'. (CMD-041)
+Information: Defining new variable 'power_model_preference'. (CMD-041)
+
+Timing updates: 1 (0 implicit, 1 explicit) (0 incremental, 1 full, 0 logical)
+Noise updates: 0 (0 implicit, 0 explicit) (0 incremental, 0 full)
+Maximum memory usage for this session: 2549.96 MB
+CPU usage for this session: 13 seconds 
+Elapsed time for this session: 10 seconds
+Diagnostics summary: 1 warning, 18 informationals
+
+Thank you for using pt_shell!
